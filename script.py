@@ -32,7 +32,7 @@ def l_of_sigma(s_deg: float) -> float:
 #  Таблица значений углов 2σ и длин дуг L, при σ = 0, 1, 2, 3...90 град
 
 print('| 2σ, ° | L, км |')
-for sigma in range(91):
+for sigma in range(0, 91):
     l = round(l_of_sigma(sigma), 2)
     print(f'|{" " * (7 - len(str(2 * sigma)))}{2 * sigma}|{" " * (7 - len(str(l)))}{l}|')
 
