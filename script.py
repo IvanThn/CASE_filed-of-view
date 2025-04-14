@@ -24,10 +24,17 @@ def l_of_sigma(s_deg: float) -> float:
     :param s_deg: Угол σ в градусах
     :return: Длина дуги L (км)
     """
-    s_rad = np.deg2rad(s_deg)  # Перевод угла σ из градусов в радианы и
+    s_rad = np.deg2rad(s_deg)  # Перевод угла σ из градусов в радианы
     s_rad = min(s_rad, s_rad_max)  # Верхняя граница для угла σ (в радианах)
     return 2 * R_KM * (np.arcsin((R_KM + H_KM) / R_KM * np.sin(s_rad)) - s_rad)  # Формула расчёта длинны дуги L (км)
 
+
+#  Таблица значений углов 2σ и длин дуг L, при σ = 0, 1, 2, 3...90 град
+
+print('| 2σ, ° | L, км |')
+for sigma in range(91):
+    l = round(l_of_sigma(sigma), 2)
+    print(f'|{" " * (7 - len(str(2 * sigma)))}{2 * sigma}|{" " * (7 - len(str(l)))}{l}|')
 
 # --- Подготовка данных для графика ---
 
@@ -52,7 +59,7 @@ plt.scatter(
     [L_values_km[-1]],
     color='red',
     zorder=3,
-    label=f'Макс. 2σ = {2 * s_deg_max:.2f}°, L = {L_values_km[-1]:.0f} км')
+    label=f'Макс. 2σ = {2 * s_deg_max:.2f}°, L = {L_values_km[-1]:.2f} км')
 plt.axvline(
     x=2 * s_deg_max,
     ymin=0,
@@ -78,7 +85,8 @@ plt.grid(True)  # Включение сетки
 plt.legend()  # Показ легенды
 plt.xlim(left=0)  # Начало оси X с 0
 plt.ylim(bottom=0)  # Начало оси Y с 0
-plt.xticks([x for x in range(10, 181, 10)])  # Метки на оси углов 2σ
+plt.xticks([x for x in range(0, 181, 10)])  # Метки на оси X
+plt.yticks([y for y in range(0, 5001, 500)])  # Метки на оси Y
 
 # Показать график
 plt.show()
